@@ -80,17 +80,15 @@ int main(int argc, char *argv[])
                                              &err_origin);
                     if (res != TEEC_SUCCESS){
                             errx(1, "TEEC_InvokeCommand failed with code 0x%x origin 0x%x", res, err_origin);
+                    }
 
                     
-                        for(j = 0; (i < 40960 || i > 65535) && j<32 ;j=j+2)
-                        {
-                            i = (int)gened_mask[j] << 8 | (int)gened_mask[j+1];
-                            i = i + consumption;
-                        }
+                    for(j = 0; (i < 40960 || i > 65535) && j<32 ;j=j+2)
+                    {
+                        i = (int)gened_mask[j] << 8 | (int)gened_mask[j+1];
+                        i = i + consumption;
                     }
-                    else{
-                        printf("Mask generation failed\n");
-			        }
+                    
                 } while (i < 40960 || i > 65535);
 
                 char buf[5]="";
