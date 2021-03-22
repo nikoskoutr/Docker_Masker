@@ -74,22 +74,22 @@ int main(int argc, char *argv[])
                 op.params[0].tmpref.buffer = gened_mask;
                 op.params[0].tmpref.size = 32;
 
-                do {
-                    
-                    res = TEEC_InvokeCommand(&sess, CMD_GEN_RANDOMS, &op,
-                                             &err_origin);
-                    if (res != TEEC_SUCCESS){
-                            errx(1, "TEEC_InvokeCommand failed with code 0x%x origin 0x%x", res, err_origin);
-                    }
 
                     
-                    for(j = 0; (i < 40960 || i > 65535) && j<32 ;j=j+2)
-                    {
-                        i = (int)gened_mask[j] << 8 | (int)gened_mask[j+1];
-                        i = i + consumption;
-                    }
+                res = TEEC_InvokeCommand(&sess, CMD_GEN_RANDOMS, &op,
+                                            &err_origin);
+                if (res != TEEC_SUCCESS){
+                        errx(1, "TEEC_InvokeCommand failed with code 0x%x origin 0x%x", res, err_origin);
+                }
+
+                
+                for(j = 0; (i < 40960 || i > 65535) && j<32 ;j=j+2) {
+                    i = (int)gened_mask[j] << 8 | (int)gened_mask[j+1];
+                    i = i + consumption;
+                    printf("%d",i);
+                }
                     
-                } while (i < 40960 || i > 65535);
+
 
                 char buf[5]="";
                 sprintf(buf, "%d", i);
